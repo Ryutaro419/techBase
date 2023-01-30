@@ -6,7 +6,7 @@
 
     <meta charset="UTF-8">
 
-    <title>mission_5-1</title>
+    <title>keijiban</title>
 
 </head>
 
@@ -23,7 +23,7 @@
     $pdo = new PDO($dsn, $user, $password, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));
     
     //テーブル作成
-    $sql = "CREATE TABLE IF NOT EXISTS m5_1"
+    $sql = "CREATE TABLE IF NOT EXISTS keijiban"
     ." ("
     . "id INT AUTO_INCREMENT PRIMARY KEY,"
     . "name char(32),"
@@ -42,7 +42,7 @@
         $pass = $_POST["pass"];
         //新規投稿
         if (empty($edi_id)&&!empty($name)&&!empty($comment)){
-            $sql = $pdo -> prepare("INSERT INTO m5_1 (name, comment, date, password) VALUES (:name, :comment, :date, :password)");
+            $sql = $pdo -> prepare("INSERT INTO keijiban (name, comment, date, password) VALUES (:name, :comment, :date, :password)");
             $sql -> bindParam(':name', $name, PDO::PARAM_STR);
             $sql -> bindParam(':comment', $comment, PDO::PARAM_STR);
             $sql -> bindParam(':date', $date, PDO::PARAM_STR);
@@ -50,7 +50,7 @@
             $sql -> execute();
         //編集
         }elseif(!empty($edi_id)){
-            $sql = 'UPDATE m5_1 SET name=:name,comment=:comment WHERE id=:id';
+            $sql = 'UPDATE keijiban SET name=:name,comment=:comment WHERE id=:id';
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':name', $name, PDO::PARAM_STR);
             $stmt->bindParam(':comment', $comment, PDO::PARAM_STR);
@@ -75,7 +75,7 @@
             
         
         if(!empty($del_id)&&!empty($del_pass)&&$del_pass==$row['password']){
-            $sql = 'delete from m5_1 where id=:id';
+            $sql = 'delete from keijiban where id=:id';
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':id', $del_id, PDO::PARAM_INT);
             $stmt->execute();
@@ -88,7 +88,7 @@
     if (isset($_POST['edi_submit'])){
         $edi_id = $_POST['edi_num'];
         $edi_pass = $_POST['edi_pass'];
-        $sql = 'SELECT * FROM m5_1 WHERE id=:id ';
+        $sql = 'SELECT * FROM keijiban WHERE id=:id ';
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':id', $edi_id, PDO::PARAM_INT);
         $stmt->execute();
@@ -96,7 +96,7 @@
         foreach ($results as $row){
         }
         if(!empty($edi_id)&&!empty($edi_pass)&&$edi_pass==$row['password']){
-            $sql = 'SELECT * FROM m5_1 WHERE id=:id ';
+            $sql = 'SELECT * FROM keijiban WHERE id=:id ';
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':id', $edi_id, PDO::PARAM_INT);
             $stmt->execute();
@@ -113,7 +113,7 @@
     }
     
     // データベースの内容表示
-    $sql = 'SELECT * FROM m5_1';
+    $sql = 'SELECT * FROM keijiban';
     $stmt = $pdo->query($sql);
     $results = $stmt->fetchAll();
     foreach ($results as $row){
